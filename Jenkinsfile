@@ -20,14 +20,14 @@ pipeline {
                 sh 'mvn test'
             }
         }
-    }
 
-    post {
-        success {
-            echo 'Build and tests completed successfully'
-        }
-        failure {
-            echo 'Build or tests failed'
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('My Sonar Server') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
         }
     }
 }
+           
